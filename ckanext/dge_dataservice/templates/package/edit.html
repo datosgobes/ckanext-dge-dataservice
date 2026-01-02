@@ -1,0 +1,8 @@
+{% set pkg = pkg_dict %}
+{% set pkg_dict = pkg_dict %}
+{% if dataset_type == 'dataservice' %}
+   {% extends "dataservice/edit.html" %}
+{% else %}
+    {% ckan_extends %}
+{% endif %}
+

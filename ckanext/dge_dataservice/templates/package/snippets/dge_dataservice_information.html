@@ -1,0 +1,104 @@
+<section id="dataservice-information" style="display: block;">
+  <div class="additional-info__content flex-display w--100 flex-column relative">
+    {% block package_additional_info %}
+      <div class="read-more read-more--md">
+        <div class="table-container">
+          <table class="custom-table">
+
+            {% block dataservice_hvd %}
+              {% if pkg_dict.hvd_category and dict_fields[inc_dict.hvd_category] %}
+                <tbody>
+                  <tr class="hvd-row--title">
+                    <th colspan="2">{{ h.scheming_language_text(dict_fields[inc_dict.hvd_category].label) }}</th>
+                  </tr>
+                  <tr class="hvd-row--value">
+                    <th class="large text--color-primary-dark">
+                      {{ h.scheming_language_text(dict_fields[inc_dict.hvd_category].label) }}
+                    </th>
+                    <td>
+                      {% snippet 'scheming/display_snippets/dge_multiple_uri_text_label.html',
+                      data=pkg_dict, field=dict_fields[inc_dict.hvd_category] %}
+                    </td>
+                  </tr>
+                </tbody>
+              {% endif %}
+            {% endblock %}
+            
+            {% block package_multilingual_tags %}
+              {% if pkg_dict.multilingual_tags and dict_fields[inc_dict.multilingual_tags] %}
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    {{ _('Keywords') }}
+                  </th>
+                </tr>
+                <tr>
+                  <th class="large text--color-primary-dark">
+                    {{ h.scheming_language_text(dict_fields[inc_dict.multilingual_tags].label) }}
+                  </th>
+                  <td>
+                    {% snippet "package/snippets/dge_tags.html", tags=pkg_dict.multilingual_tags %}
+                  </td>
+                </tr>
+              </tbody>
+              {% endif %}
+            {% endblock %}
+            
+            {% block dataservice_access_service %}
+              {% if (pkg_dict.endpoint_url and dict_fields[inc_dict.endpoint_url]) or
+              (pkg_dict.endpoint_descritpion and dict_fields[inc_dict.endpoint_descritpion]) or
+              (pkg_dict.page and dict_fields[inc_dict.page]) %}
+                <tbody>
+                  <tr>
+                    <th colspan="2">
+                      {{_('Access services')}}
+                    </th>
+                  </tr>
+                  {% if pkg_dict.endpoint_url and dict_fields[inc_dict.endpoint_url] %}
+                    <tr>
+                      <th class="large text--color-primary-dark">
+                        {{ h.scheming_language_text(dict_fields[inc_dict.endpoint_url].label) }}
+                      </th>
+                      <td>
+                        {% snippet 'scheming/display_snippets/multiple_uri_text.html',
+                        data=pkg_dict, field=dict_fields[inc_dict.endpoint_url] %}
+                      </td>
+                    </tr>
+                  {% endif %}
+
+                  {% if pkg_dict.endpoint_descritpion and dict_fields[inc_dict.endpoint_descritpion] %}
+                    <tr>
+                      <th class="large text--color-primary-dark">
+                        {{ h.scheming_language_text(dict_fields[inc_dict.endpoint_descritpion].label) }}
+                      </th>
+                      <td>
+                        {% snippet 'scheming/display_snippets/multiple_uri_text.html',
+                        data=pkg_dict, field=dict_fields[inc_dict.endpoint_descritpion] %}
+                      </td>
+                    </tr>
+                  {% endif %}
+
+                  {% if pkg_dict.page and dict_fields[inc_dict.page] %}
+                    <tr>
+                      <th class="large text--color-primary-dark">
+                        {{ h.scheming_language_text(dict_fields[inc_dict.page].label) }}
+                      </th>
+                      <td>
+                        {% snippet 'scheming/display_snippets/multiple_uri_text.html',
+                        data=pkg_dict, field=dict_fields[inc_dict.page] %}
+                      </td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              {% endif %}
+            {% endblock %}
+            
+          </table>
+        </div>
+      </div>
+      <div class="read-more__bottom read-more__bottom--blue">
+        <button role="button" class="" data-more="{{ _('Read more') }}" data-less="{{_('Read less') }}">{{ _('Read more') }}</button>
+      </div>
+    {% endblock %}
+  </div>
+</section>

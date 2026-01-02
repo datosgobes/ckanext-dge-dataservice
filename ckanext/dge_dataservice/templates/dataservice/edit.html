@@ -1,0 +1,14 @@
+{% extends 'dataservice/edit_base.html' %}
+
+{% block wrapper_class %} ckanext-dataservice-edit-wrapper{% endblock %}
+
+{#% block ckanext_dataservice_edit_span %}span12{% endblock %#}
+
+{% block primary_content_inner %}
+  {% block form %}
+  {#- passing c to a snippet is bad but is required here
+      for backwards compatibility with old templates and
+      plugins using setup_template_variables() -#}
+  {{- h.snippet(form_snippet, pkg_dict=pkg_dict, c=c, **form_vars) -}}
+  {% endblock %}
+{% endblock %}

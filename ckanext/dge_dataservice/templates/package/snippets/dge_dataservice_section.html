@@ -1,0 +1,91 @@
+<div class="section-links flex-justify-start">
+  {% if h.dge_has_package_information_info(pkg_dict, dict_fields, is_dcatapes, dataset_type) %}
+    <div class="section-links__item">
+      <a href="javascript:void(0);" onclick="showSection('dataservice-information', this)" rel="nofollow">
+        <div class="section-links__content active">
+          <div class="section-links__content__img">
+            <img src="{{ h.url_for_static('/images/SVG/dataset-section-info.svg') }}" alt="{{ _('Show dataservice information') }}.">
+          </div>
+          <div class="section-links__content__title">
+            <span class="section-links__value">{{ _('Information') }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+  
+  {% if pkg_dict.dataservice_pkgs %}
+    <div class="section-links__item">
+      <a href="javascript:void(0);" onclick="showSection('dataservice-served-datasets', this)" rel="nofollow">
+        <div class="section-links__content">
+          <div class="section-links__content__img">
+            <img
+              src="{{ h.url_for_static('/images/SVG/dataset-section-distribution.svg') }}"
+              alt="{{ _('Show dataservice served datasets') }}.">
+          </div>
+          <div class="section-links__content__title">
+            <span class="section-links__value">{{ _('Served datasets') }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+
+  {% if h.dge_has_package_contact_info(pkg_dict, dict_fields, dataset_type) %}
+    <div class="section-links__item">
+      <a href="javascript:void(0);"
+        onclick="showSection('dataservice-contact', this)" rel="nofollow">
+        <div class="section-links__content">
+          <div class="section-links__content__img">
+            <img
+              src="{{ h.url_for_static('/images/SVG/dataset-section-contact.svg') }}"
+              alt="{{ _('Show dataservice contact') }}.">
+          </div>
+          <div class="section-links__content__title">
+            <span class="section-links__value">{{ _('Contact') }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+  
+  {% if h.dge_has_package_quality_info(pkg_dict, dict_fields, dataset_type) %}
+    <div class="section-links__item">
+      <a href="javascript:void(0);"
+        onclick="showSection('dataservice-quality', this)" rel="nofollow">
+        <div class="section-links__content">
+          <div class="section-links__content__img">
+            <img
+              src="{{ h.url_for_static('/images/SVG/dataset-section-quality.svg') }}"
+              alt="{{ _('Show dataservice quality') }}.">
+          </div>
+          <div class="section-links__content__title">
+            <span class="section-links__value">{{ _('Quality') }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  function showSection(sectionId, element) {
+    const sections = document.querySelectorAll("#dataservice-information, #dataservice-served-datasets, #dataservice-contact, #dataservice-quality");
+    sections.forEach((section) => {
+      section.style.display = "none";
+    });
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.style.display = "block";
+    }
+  
+    const links = document.querySelectorAll(".section-links__content");
+    links.forEach((link) => {
+      link.classList.remove("active");
+    });
+    const linkContent = element.querySelector(".section-links__content");
+    if (linkContent) {
+      linkContent.classList.add("active");
+    }
+  }
+</script>

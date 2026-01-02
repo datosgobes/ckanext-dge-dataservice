@@ -1,0 +1,107 @@
+{% extends "page.html" %}
+
+{% set pkg = pkg_dict or c.pkg_dict %}
+{% set name = pkg.title or pkg.name %}
+{% set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+
+{% set dataservice_read_route = 'dgeDataserviceBlueprint.read' %}
+{% set dataservice_index_route = 'dgeDataserviceBlueprint.index' %}
+{% set dataservice_edit_route = 'dgeDataserviceBlueprint.edit' %}
+
+{% block subtitle %}{{ pkg.title or pkg.name }} - {{ _('Dataservices') }}{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {% asset "dge_dataservice/dge_dataservice-css" %}
+ {% endblock %}
+
+{% block links -%}
+    {{ super() }}
+    <link rel="alternate" type="application/rdf+xml" href="{{ h.url_for(dataservice_read_route, id=pkg.id, format='rdf', qualified=True) }}"/>
+{% endblock -%}
+
+{% block head_extras -%}
+    {% set description = h.markdown_extract(pkg.notes, extract_length=200)|forceescape %}
+    <meta property="og:title" content="{{ h.dataset_display_name(pkg) }} - {{ g.site_title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ h.full_current_url() }}">
+    {% if pkg.image_display_url %}
+        <meta property="og:image" content="{{ pkg.image_display_url }}">
+    {% endif %}
+{% endblock -%}
+
+{% block breadcrumb_content_selected %} class="active"{% endblock %}
+
+{% block breadcrumb_content %}
+    {% set dataservice = pkg.title or pkg.name %}
+    <li>{{ h.nav_link(_('dataservices'), named_route=dataservice_index_route, highlight_actions = 'new index') }}</li>
+    <li{{ self.breadcrumb_content_selected() }}>{% link_for dataservice|truncate(30), named_route=dataservice_read_route, id=pkg.name %}</li>
+{% endblock %}
+
+{% block page_header %}
+{% endblock %}
+
+{% block pre_primary %}
+{% endblock %}
+
+{% block primary_content_inner %}
+    {% if h.check_access('dge_dataservice_dataservice_update', {'id':pkg.id }) %}
+        <div class="actions">
+            {% link_for _('Manage'), named_route=dataservice_edit_route, id=pkg.name, class_='btn btn-default', icon='wrench' %}
+        </div>
+    {% endif %}
+    {% block package_description %}
+        {% if pkg.private %}
+            <span class="dataset-private label label-inverse pull-right">
+                <i class="fa fa-lock icon-lock"></i>
+                {{ _('Private') }}
+            </span>
+        {% endif %}
+        <h1>
+            {% block page_heading %}
+                {{ name }}
+                {% if pkg.state.startswith('draft') %}
+                    [{{ _('Draft') }}]
+                {% endif %}
+            {% endblock %}
+        </h1>
+
+
+    {% block package_notes %}
+     
+    {% endblock %}
+
+        {% if pkg.url %}
+            <p><a class="btn btn-primary ckanext-dataservice-launch" href="{{ pkg.url }}" target="_blank"><i class="fa fa-external-link icon-external-link"></i> {{ _('Launch website') }}</a></p>
+        {% endif %}
+
+    {% endblock %}
+
+    {% block package_tags %}
+        
+    {% endblock %}
+    {% block package_additional_info %}
+    {% snippet "scheming/package/snippets/additional_info.html",
+    pkg_dict=pkg, dataset_type=dataset_type, schema=schema %}
+    {% endblock %}
+
+    {% block package_search_results_list %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block secondary_content %}
+    {% block secondary_help_content %}{% endblock %}
+
+    {% block package_info %}
+        {% snippet 'dataservice/snippets/dataservice_info.html', pkg=pkg, dataservice_pkgs=c.dataservice_pkgs %}
+    {% endblock %}
+
+    {% block package_social %}
+        {% snippet "snippets/social.html" %}
+    {% endblock %}
+
+    {% block package_license %}
+        {% snippet "snippets/license.html", pkg_dict=pkg %}
+    {% endblock %}
+{% endblock %}

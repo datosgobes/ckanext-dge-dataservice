@@ -1,0 +1,5 @@
+dge_dataservice-css:
+  filter: cssrewrite
+  output: ckanext-dge_dataservice/%(version)s-dge_dataservice.css
+  contents:
+    - css/dge_dataservice.css

@@ -1,0 +1,70 @@
+/*
+* Copyright (C) 2025 Entidad Pública Empresarial Red.es
+*
+* This file is part of "dge-dataservice (datos.gob.es)".
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Custom style rules for ckanext-dataservice */
+
+.context-info .module-content .smallest {
+    font-size: 13px;
+}
+
+.context-info .module-content .info .btn {
+    margin-top: 18px;
+}
+
+.actions {
+    top: 36px;
+    right: 25px;
+}
+
+.ckanext-dataservice-edit-wrapper {
+    background-image: none;
+}
+
+.ckanext-dataservice-image-container {
+    text-align: center;
+}
+
+.ckanext-dataservice-image {
+    margin-bottom: 25px;
+}
+
+.ckanext-dataservice-notes {
+    margin-bottom: 25px;
+}
+
+.ckanext-dataservice-launch {
+    margin-bottom: 25px;
+}
+
+
+td.ckanext_dataservice_pagination_footer {
+    padding: 0;
+}
+.ckanext_dataservice_pagination_footer .pagination {
+    margin: 0;
+    border-top: none 0;
+}
+
+.module-narrow .nav-item > a {
+    word-break: break-word;
+}
+
+.ck-editor__editable_inline {
+    min-height: 200px;
+}

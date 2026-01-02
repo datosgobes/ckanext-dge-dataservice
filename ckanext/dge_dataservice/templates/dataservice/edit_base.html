@@ -1,0 +1,95 @@
+{% extends 'page.html' %}
+
+{% set pkg = pkg_dict or c.pkg_dict  %}
+
+{% set dge_dataservice_index_route = 'dgeDataserviceBlueprint.index' %}
+{% set dge_dataservice_read_route = 'dgeDataserviceBlueprint.read' %}
+{% set dge_dataservice_edit_route = 'dgeDataserviceBlueprint.edit' %}
+
+
+
+{% block subtitle %}{{ _('Dataservices') }}{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {% asset "dge_dataservice/dge_dataservice-css" %}
+{% endblock %}
+
+{% block breadcrumb_content_selected %}{% endblock %}
+
+{% block breadcrumb_content %}
+  {% if pkg %}
+    {% set dataservice = pkg.title or pkg.name %}
+    <li>{% link_for _('Dataservices'), named_route=dge_dataservice_index_route %}</li>
+    <li{{ self.breadcrumb_content_selected() }}>{% link_for dataservice|truncate(30), named_route=dge_dataservice_read_route, id=pkg.name %}</li>
+    <li class="active">{% link_for _('Edit'), named_route=dge_dataservice_edit_route, id=pkg.name %}</li>
+  {% else %}
+    <li>{% link_for _('Dataservices'), named_route=dge_dataservice_index_route %}</li>
+    <li class="active"><a href="">{{ _('Create Dataservice') }}</a></li>
+  {% endif %}
+{% endblock %}
+
+{% block primary %}
+  <div class="{% block ckanext_dataservice_edit_span %}primary col-sm-9 col-xs-12{% endblock %}">
+    {% block primary_content %}
+      <article class="module">
+        {% block page_header %}
+          <header class="module-content page-header">
+            {% if self.content_action() | trim %}
+              <div class="content_action">
+                {% block content_action %}
+                  {% link_for _('View dataservice'), named_route=dge_dataservice_read_route, id=pkg.name, class_='btn', icon='eye-open' %}
+                {% endblock %}
+              </div>
+            {% endif %}
+            <ul class="nav nav-tabs">
+              {% block content_primary_nav %}
+                {{ h.build_nav_icon(dge_dataservice_edit_route, _('Edit dataservice'), id=pkg.name) }}
+              {% endblock %}
+            </ul>
+          </header>
+        {% endblock %}
+        <div class="{% block ckanext_dataservice_edit_module_content_class %}module-content{% endblock %}">
+          {% if self.page_primary_action() | trim %}
+            <div class="page_primary_action">
+              {% block page_primary_action %}{% endblock %}
+            </div>
+          {% endif %}
+          {% block primary_content_inner %}
+          {% endblock %}
+        </div>
+      </article>
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{#% block secondary %#}
+
+{#% endblock %#}
+
+{% block info_module %}
+{{ dataset_type }}
+{{ dataset_type }}
+{{ dataset_type }}
+{% if dataset_type == 'dataservice' %}
+  <section class="module module-narrow module-shallow">
+    <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('What are dataservices?') }}</h2>
+    <div class="module-content">
+      <p>
+        {% trans %}
+        A CKAN Dataservice is a is a collection of operations accessible through an interface (API) that provide access to one or more datasets or data processing functions.
+        {% endtrans %}
+      </p>
+    </div>
+  </section>
+  {% else %}
+      {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block resources_module %}
+  {% if dataset_type != 'dataservice' %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
