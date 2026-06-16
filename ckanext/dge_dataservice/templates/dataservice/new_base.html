@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block primary %}
-  <div class="edit-dataservice-content">
+  <div class="new-dataservice-content">
     {% block primary_content %}
       <article class="module">
         {% block page_header %}
@@ -38,13 +38,18 @@
             {% if self.content_action() | trim %}
               <div class="content_action">
                 {% block content_action %}
-                  {% link_for _('View dataservice'), named_route=dge_dataservice_read_route, id=pkg.name, class_='btn', icon='eye' %}
+                  {% link_for _('View dataservice'), named_route=dge_dataservice_read_route, id=pkg.name, class_='btn', icon='eye-open' %}
                 {% endblock %}
               </div>
             {% endif %}
+            <ul class="nav nav-tabs">
+              {% block content_primary_nav %}
+                {{ h.build_nav_icon(dge_dataservice_edit_route, _('Edit dataservice'), id=pkg.name) }}
+              {% endblock %}
+            </ul>
           </header>
         {% endblock %}
-        <div class="{% block ckanext_dataservice_edit_module_content_class %}module-content{% endblock %}">
+        <div class="module-content">
           {% if self.page_primary_action() | trim %}
             <div class="page_primary_action">
               {% block page_primary_action %}{% endblock %}
@@ -57,8 +62,6 @@
     {% endblock %}
   </div>
 {% endblock %}
-
-
 
 {#% block secondary %#}
 
@@ -84,11 +87,10 @@
   {% endif %}
 {% endblock %}
 #}
-{#
+
 {% block resources_module %}
   {% if dataset_type != 'dataservice' %}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
-#}

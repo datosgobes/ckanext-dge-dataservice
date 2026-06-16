@@ -1,8 +1,6 @@
 {% extends 'dataservice/edit_base.html' %}
 
-{% block wrapper_class %} ckanext-dataservice-edit-wrapper{% endblock %}
-
-{#% block ckanext_dataservice_edit_span %}span12{% endblock %#}
+{% block page_title_content %}{{ _('Edit dataservice') }}{% endblock %}
 
 {% block primary_content_inner %}
   {% block form %}
@@ -11,4 +9,10 @@
       plugins using setup_template_variables() -#}
   {{- h.snippet(form_snippet, pkg_dict=pkg_dict, c=c, **form_vars) -}}
   {% endblock %}
+{% endblock %}
+
+{% block catalog_downloads %}{% endblock %}
+
+{% block secondary_content %}
+  {# h.snippet('dataservice/snippets/helper.html') #}
 {% endblock %}

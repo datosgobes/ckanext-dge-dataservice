@@ -114,6 +114,16 @@ class DgeDataservicePlugin(plugins.SingletonPlugin, lib_plugins.DefaultTranslati
 
         return self._add_to_pkg_dict(context, pkg_dict)
 
+    def before_index(self, data_dict):
+        '''
+        When the package type is "dataservice", the dataservice_pkgs key is removed
+        to prevent indexing errors, as it is created during visualization.
+        '''
+        if data_dict.get('type') == 'dataservice':
+            data_dict.pop("dataservice_pkgs", None)
+        
+        return data_dict
+    
     def before_search(self, search_params):
         '''
         Unless the query is already being filtered by this dataset_type
