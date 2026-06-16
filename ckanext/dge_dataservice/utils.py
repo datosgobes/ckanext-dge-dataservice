@@ -220,9 +220,14 @@ def delete_view(id):
     context = {'user': tk.g.user}
     try:
         if tk.request.method == 'POST':
-            tk.get_action('dge_dataservice_dataservice_delete')(context, {'id': id})
-            h.flash_notice(_('Dataservice has been deleted.'))
+            dele = tk.get_action('dge_dataservice_dataservice_delete')(context, {'id': id})
+            if dele is False:
+                h.flash_notice(_('Dataservice could not be deleted.'))
+            else:
+                h.flash_notice(_('Dataservice has been deleted.'))
+                
             return tk.redirect_to(index_route)
+
         tk.g.pkg_dict = tk.get_action('package_show')(context, {'id': id})
     except tk.NotAuthorized:
         tk.abort(401, _('Unauthorized to delete dataservice'))

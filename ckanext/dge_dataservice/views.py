@@ -120,7 +120,7 @@ def dataset_dataservices_list(id):
     return utils.dataset_dataservice_list(id)
 
 
-def delete(id):
+def delete_dataservice(id, package_type):
     return utils.delete_view(id)
 
 bp_dataservice.add_url_rule(f'/{utils.DATASERVICE_TYPE_NAME}/', 
@@ -150,7 +150,8 @@ bp_dataservice.add_url_rule(f'/{utils.DATASET_TYPE_NAME}/{utils.DATASERVICE_TYPE
                       endpoint="dataset_dataservice_list")
 
 bp_dataservice.add_url_rule(f'/{utils.DATASERVICE_TYPE_NAME}/delete/<id>',
-                      view_func=delete,
+                      defaults={u'package_type': u'dataservice'},
+                      view_func=delete_dataservice,
                       methods=['GET', 'POST'],
                       endpoint="delete")
 

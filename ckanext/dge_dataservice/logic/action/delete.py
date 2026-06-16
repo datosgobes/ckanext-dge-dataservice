@@ -20,14 +20,9 @@ import logging
 
 import ckan.lib.helpers as h
 import ckan.plugins.toolkit as toolkit
-import ckanext.dge_dataservice.utils as utils
-
-
+import ckanext.dge.helpers as dh
 
 log = logging.getLogger(__name__)
-
-
-
     
 def dataservice_delete(context, data_dict):
     '''Delete a dataservice. Dataservoce delete cascades to
@@ -38,8 +33,12 @@ def dataservice_delete(context, data_dict):
     '''
 
     model = context['model']
-    id = toolkit.get_or_bust(data_dict, 'id')
-
+    dataservice_id = toolkit.get_or_bust(data_dict, 'id')
+    dataservice_name = toolkit.get_or_bust(data_dict, 'name')
+    if dh.dge_has_datasets_served_by_dataservice(dataservice_id, dataservice_name) is True:
+        h.flash_notice(toolkit._('Dataservice has Datasources associated.'))
+        return False
+    
     entity = model.Package.get(id)
 
     if entity is None:
@@ -49,3 +48,4 @@ def dataservice_delete(context, data_dict):
 
     entity.purge()
     model.repo.commit()
+    return True

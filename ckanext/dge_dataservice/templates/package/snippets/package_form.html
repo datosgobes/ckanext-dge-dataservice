@@ -31,7 +31,7 @@
 {% block save_button %}
 {% if dataset_type == 'dataservice' %}
   {% if form_style != 'edit' %}
-    <button class="btn btn-primary" type="submit" name="save" value=''>{% block save_button_text %}{% if form_style != 'edit' %}{{ _('Create Dataservice') }}{% else %}{{ _('Update Dataservice') }}{% endif %}{% endblock %}</button>
+    <button class="btn btn-primary" type="submit" name="save" value=''>{% block save_button_text %}{% if form_style != 'edit' %}{{ _('Create dataservice') }}{% else %}{{ _('Update Dataservice') }}{% endif %}{% endblock %}</button>
   {% else %}
     <button class="btn btn-primary" type="submit" name="save" value=''>{{ _('Update Dataservice') }}</button>
   {% endif %}
